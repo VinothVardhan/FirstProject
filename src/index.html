@@ -7,7 +7,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body>
+
+<body style="background-color: aquamarine;">
+
+  <h4>This is my first ever Angular Project</h4>
+  <h5>This is my first ever Angular Project</h5>
+
+<form name="userInfo" onsubmit="validateAndProduceResult()">
+  <label for="firstName">First Name:</label>
+  <input type="text" id="firstName" name="firstName"><br><br>
+  <label for="lastName">Last Name:</label>
+  <input type="text" id="lastName" name="lastName"><br><br>
+  <label for="DOB">Date of Birth:</label>
+  <input type="date" id="DOB" name="dob"><br><br>
+  <label for="DOB">Gender:</label>
+  <input list="genderList" id="gender" name="gender">
+  <datalist id="genderList">
+    <option value="Male">
+    <option value="Female">
+  </datalist>
+  <br><br>
+
+  <label for="email">Email ID:</label>
+  <input for="email" id="email" name="email" autocomplete="on"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<br><br>
+<p id="headerText" style="color: crimson;"></p>
+<p id="name"></p>
+<p id="dateOfBirth"></p>
+<p id="gend"></p>
+<p id="mail"></p>
+
   <app-root></app-root>
 </body>
+
+<script>
+  function validateAndProduceResult() {
+    var canProduceOutput = validateForm();
+    if (canProduceOutput == true) {
+      var fname = document.forms["userInfo"]["firstName"].value;
+
+      document.getElementById("headerText").innerHTML = "Hello " + fname + ". Verify the information that you've entered!";
+      document.getElementById("name").innerHTML = fname + document.forms["userInfo"]["lastName"].value;
+      document.getElementById("dateOfBirth").innerHTML = document.forms["userInfo"]["dob"].value;
+      document.getElementById("gend").innerHTML = document.forms["userInfo"]["gender"].value;
+      document.getElementById("mail").innerHTML = document.forms["userInfo"]["email"].value;
+    }
+  }
+
+  function validateForm() {
+    var firstName = document.forms["userInfo"]["firstName"].value;
+    if (firstName == "") {
+      alert("First Name cannot be blank.");
+      return false;
+    }
+    var lastName = document.forms["userInfo"]["lastName"].value;
+    if (lastName == "") {
+      alert("Last Name cannot be blank.");
+      return false;
+    }
+    var dob = document.forms["userInfo"]["dob"].value;
+    if (dob == "") {
+      alert("DOB cannot be blank.");
+      return false;
+    }
+    var gender = document.forms["userInfo"]["gender"].value;
+    if (gender == "") {
+      alert("Gender cannot be blank.");
+      return false;
+    }
+    
+    return validateEmail(document.forms["userInfo"]["email"].value);
+  }
+
+ function validateEmail(email) {
+    if (email == "") {
+      alert("Email cannot be blank.");
+      return false;
+    } 
+    
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    } else {
+      alert("Invalid email ID " + email + ".");
+      return false;
+    }
+  }
+</script>
 </html>
